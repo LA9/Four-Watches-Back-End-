@@ -54,18 +54,7 @@ class CustomerService {
         return customerRepository.findAll()
     }
 
-    fun deleteCustomer(id: Int): ResponseEntity<Any> {
-        val customer: CustomerDao = customerRepository.findById(id).orElseThrow()
-        customerRepository.delete(customer)
-        return ResponseEntity<Any>(customer.email +" Deleted", HttpStatus.ACCEPTED)
-    }
 
-    fun getCustomerIdByEmail(email: String): ResponseEntity<CustomerDao> {
-        val customerId =customerRepository.findCustomerByEmail(email.lowercase())
-
-        return ResponseEntity<CustomerDao>(customerId, HttpStatus.ACCEPTED)
-
-    }
 
 
 }

@@ -35,19 +35,7 @@ class CustomerController() {
     }
 
 
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    fun deleteCustomer(@PathVariable("id") id: Int): ResponseEntity<Any> {
-        return customerService.deleteCustomer(id)
-    }
 
-    @Transactional
-    @GetMapping("/get-customer/{email}")
-    fun getCustomerIdByEmail(@PathVariable("email") email: String): ResponseEntity<CustomerDao> {
-        val logger: Logger = LoggerFactory.getLogger("-------")
-        logger.info(customerService.getCustomerIdByEmail(email).toString())
-        return customerService.getCustomerIdByEmail(email)
-    }
 
 }
 

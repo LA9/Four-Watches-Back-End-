@@ -24,17 +24,15 @@ class CustomerController() {
 
     @Transactional
     @PostMapping("/register")
-    fun registerCustomer(@RequestBody registerRequest :RegisterRequest): ResponseEntity<Any> {
+    fun registerCustomer(@RequestBody registerRequest: RegisterRequest): ResponseEntity<Any> {
         return customerService.registerCustomer(registerRequest)
     }
 
- @Transactional
+    @Transactional
     @PostMapping("/login")
     fun loginCustomer(@RequestBody login: Login): CustomerDao {
         return customerService.login(login)
     }
-
-
 
 
 }

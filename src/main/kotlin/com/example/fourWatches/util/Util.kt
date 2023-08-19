@@ -1,6 +1,6 @@
 package com.example.fourWatches.util
 
-import com.example.fourWatches.customer.RegisterRequest
+import com.example.fourWatches.customer.RegisterRequestModel
 import org.springframework.security.crypto.bcrypt.BCrypt
 
 
@@ -11,8 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt
 //        logger.info(info)
 //    }
 
-    fun customerDetailsAreNotNull(registerRequest: RegisterRequest): Boolean {
-        val array = arrayOf(registerRequest.email, registerRequest.username, registerRequest.password)
+    fun customerDetailsAreNotNull(registerRequestModel: RegisterRequestModel): Boolean {
+        val array = arrayOf(registerRequestModel.email, registerRequestModel.username, registerRequestModel.password)
         array.forEach {
             if (it.isEmpty())
                 return false
@@ -20,13 +20,13 @@ import org.springframework.security.crypto.bcrypt.BCrypt
         return true
     }
 
-    fun getResponseFailedMessage(registerRequest: RegisterRequest): String {
+    fun getResponseFailedMessage(registerRequestModel: RegisterRequestModel): String {
         var message = ""
-        if (registerRequest.email.isEmpty())
+        if (registerRequestModel.email.isEmpty())
             message = "Response Failed :  Email is required !\n"
-        if (registerRequest.password.isEmpty())
+        if (registerRequestModel.password.isEmpty())
             message = "Response Failed :  Password is required !\n"
-        if (registerRequest.username.isEmpty())
+        if (registerRequestModel.username.isEmpty())
             message = "Response Failed :  username is required !\n"
         return message
     }

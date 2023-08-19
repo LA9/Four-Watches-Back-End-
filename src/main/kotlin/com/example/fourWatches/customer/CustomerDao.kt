@@ -6,9 +6,9 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "customer")
 data class CustomerDao(
-    @Column(length = 20)
-    var customerUsername: String = "",
-    @Column(name = "email", nullable = false, length = 30, unique = true)
+    @Column(nullable = false, length = 20, unique = true)
+    var username: String = "",
+    @Column(nullable = false, length = 30, unique = true)
     var email: String = "",
     @Column(length = 80)
     var password: String = "",

@@ -1,7 +1,5 @@
 package com.example.fourWatches.customer
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
@@ -17,21 +15,17 @@ class CustomerController() {
     @Autowired
     private lateinit var customerService: CustomerService
 
-    @GetMapping("/get-all")
-    fun getCustomers(): Any {
-        return customerService.getCustomers()
-    }
 
     @Transactional
     @PostMapping("/register")
-    fun registerCustomer(@RequestBody registerRequest: RegisterRequest): ResponseEntity<Any> {
-        return customerService.registerCustomer(registerRequest)
+    fun registerCustomer(@RequestBody registerRequestModel: RegisterRequestModel): ResponseEntity<Any> {
+        return customerService.registerCustomer(registerRequestModel)
     }
 
     @Transactional
     @PostMapping("/login")
-    fun loginCustomer(@RequestBody login: Login): CustomerDao {
-        return customerService.login(login)
+    fun loginCustomer(@RequestBody loginModel: LoginModel): CustomerDao {
+        return customerService.login(loginModel)
     }
 
 

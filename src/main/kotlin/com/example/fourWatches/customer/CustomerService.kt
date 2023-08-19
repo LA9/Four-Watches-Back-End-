@@ -18,28 +18,28 @@ class CustomerService {
     @Autowired
     private lateinit var customerRepository: CustomerRepository
 
-    fun registerCustomer(registerRequest: RegisterRequest): ResponseEntity<Any> {
+    fun registerCustomer(registerRequestModel: RegisterRequestModel): ResponseEntity<Any> {
 
-        if (!customerDetailsAreNotNull(registerRequest))
-            return ResponseEntity<Any>(getResponseFailedMessage(registerRequest), HttpStatus.BAD_REQUEST)
+        if (!customerDetailsAreNotNull(registerRequestModel))
+            return ResponseEntity<Any>(getResponseFailedMessage(registerRequestModel), HttpStatus.BAD_REQUEST)
 
 
         val customerDao = CustomerDao().apply {
-            customerUsername = registerRequest.username
-            email = registerRequest.email
-            password = cryptPlainPassword(registerRequest.password)
+            username = registerRequestModel.username
+            email = registerRequestModel.email
+            password = cryptPlainPassword(registerRequestModel.password)
         }
         customerRepository.save(customerDao)
         return ResponseEntity<Any>(customerDao, HttpStatus.ACCEPTED)
     }
 
     @Transactional
-    fun login(login: Login): CustomerDao {
+    fun login(loginModel: LoginModel): CustomerDao {
 
         return try {
-            val customer = customerRepository.findCustomerByEmail(login.email.lowercase())
+            val customer = customerRepository.findCustomerByEmail(loginModel.email.lowercase())
 
-            if (comparePassword(login.password, customer.password)) {
+            if (comparePassword(loginModel.password, customer.password)) {
                  customer
             } else
                 return  CustomerDao()
@@ -49,10 +49,7 @@ class CustomerService {
         }
     }
 
-    fun getCustomers(): Any {
 
-        return customerRepository.findAll()
-    }
 
 
 

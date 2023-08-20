@@ -16,16 +16,20 @@ class CustomerController() {
     private lateinit var customerService: CustomerService
 
 
-    @Transactional
     @PostMapping("/register")
     fun registerCustomer(@RequestBody registerRequestModel: RegisterRequestModel): ResponseEntity<Any> {
         return customerService.registerCustomer(registerRequestModel)
     }
 
-    @Transactional
     @PostMapping("/login")
     fun loginCustomer(@RequestBody loginModel: LoginModel): CustomerDao {
         return customerService.login(loginModel)
+    }
+
+
+    @PostMapping("/check-email-if-registered")
+    fun isEmailRegistered(@RequestBody registerRequestModel: RegisterRequestModel): Boolean {
+        return customerService.isEmailRegistered(registerRequestModel.email)
     }
 
 

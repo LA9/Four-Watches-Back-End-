@@ -7,6 +7,7 @@ import java.util.*
 
 @Repository
 interface CustomerRepository : CrudRepository<CustomerDao, Int> {
-    fun findCustomerByEmail(email: String): CustomerDao
+    fun findCustomerByEmail(email: String): Optional<CustomerDao>
+    fun findCustomerByUsername(username: String): Optional<CustomerDao>
 }
 

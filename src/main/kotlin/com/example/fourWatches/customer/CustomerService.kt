@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class CustomerService {
 
-//    val myUtil by lazy { MyUtil() }
+    val myUtil by lazy { MyUtil() }
 
     @Autowired
     private lateinit var customerRepository: CustomerRepository
@@ -33,25 +33,27 @@ class CustomerService {
         return ResponseEntity<Any>(customerDao, HttpStatus.ACCEPTED)
     }
 
-    @Transactional
     fun login(loginModel: LoginModel): CustomerDao {
 
         return try {
-            val customer = customerRepository.findCustomerByEmail(loginModel.email.lowercase())
+            val customer = customerRepository.findCustomerByEmail(loginModel.email.lowercase()).get()
 
             if (comparePassword(loginModel.password, customer.password)) {
-                 customer
+                customer
             } else
-                return  CustomerDao()
+                return CustomerDao()
 
         } catch (e: EmptyResultDataAccessException) {
-         return  CustomerDao()
+            return CustomerDao()
         }
     }
 
+    @Transactional
+    fun isEmailRegistered(email:String): Boolean {
 
-
-
+        myUtil.info((!customerRepository.findCustomerByEmail(email).isEmpty).toString())
+        return !customerRepository.findCustomerByEmail(email).isEmpty
+    }
 
 
 }

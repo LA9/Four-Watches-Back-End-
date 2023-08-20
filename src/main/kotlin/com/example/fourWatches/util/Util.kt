@@ -1,15 +1,19 @@
 package com.example.fourWatches.util
 
 import com.example.fourWatches.customer.RegisterRequestModel
+import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCrypt
+import java.util.logging.Logger
 
 
 
+class MyUtil {
+    fun info(info: String) {
+        var logger: org.slf4j.Logger? = LoggerFactory.getLogger(MyUtil::class.java)
+        logger!!.info(info)
+    }
+}
 
-//  fun info(info: String) {
-//      var logger: Logger = LoggerFactory.getLogger(MyUtil::class.java)
-//        logger.info(info)
-//    }
 
     fun customerDetailsAreNotNull(registerRequestModel: RegisterRequestModel): Boolean {
         val array = arrayOf(registerRequestModel.email, registerRequestModel.username, registerRequestModel.password)

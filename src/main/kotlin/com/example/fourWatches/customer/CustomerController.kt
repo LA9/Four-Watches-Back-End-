@@ -18,6 +18,7 @@ class CustomerController() {
 
     @PostMapping("/register")
     fun registerCustomer(@RequestBody registerRequestModel: RegisterRequestModel): ResponseEntity<Any> {
+
         return customerService.registerCustomer(registerRequestModel)
     }
 
@@ -27,10 +28,6 @@ class CustomerController() {
     }
 
 
-    @PostMapping("/check-email-if-registered")
-    fun isEmailRegistered(@RequestBody registerRequestModel: RegisterRequestModel): Boolean {
-        return customerService.isEmailRegistered(registerRequestModel.email)
-    }
 
 
 }

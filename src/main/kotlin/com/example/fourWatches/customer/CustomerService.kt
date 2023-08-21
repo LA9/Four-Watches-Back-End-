@@ -24,6 +24,11 @@ class CustomerService {
             return ResponseEntity<Any>(getResponseFailedMessage(registerRequestModel), HttpStatus.BAD_REQUEST)
 
 
+        if (isEmailAlreadyRegistered(registerRequestModel.email))
+            return ResponseEntity<Any>("Email is already registered", HttpStatus.ACCEPTED)
+        if (isUsernameAlreadyRegistered(registerRequestModel.username))
+            return ResponseEntity<Any>("Username is already registered", HttpStatus.BAD_REQUEST)
+
         val customerDao = CustomerDao().apply {
             username = registerRequestModel.username
             email = registerRequestModel.email
@@ -32,6 +37,7 @@ class CustomerService {
         customerRepository.save(customerDao)
         return ResponseEntity<Any>(customerDao, HttpStatus.ACCEPTED)
     }
+
 
     fun login(loginModel: LoginModel): CustomerDao {
 
@@ -48,10 +54,12 @@ class CustomerService {
         }
     }
 
-    @Transactional
-    fun isEmailRegistered(email:String): Boolean {
+    private fun isUsernameAlreadyRegistered(username: String): Boolean {
+        return !customerRepository.findCustomerByUsername(username).isEmpty
 
-        myUtil.info((!customerRepository.findCustomerByEmail(email).isEmpty).toString())
+    }
+
+    fun isEmailAlreadyRegistered(email: String): Boolean {
         return !customerRepository.findCustomerByEmail(email).isEmpty
     }
 

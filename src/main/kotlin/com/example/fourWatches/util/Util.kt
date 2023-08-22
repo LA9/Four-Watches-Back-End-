@@ -1,10 +1,11 @@
 package com.example.fourWatches.util
 
 import com.example.fourWatches.customer.RegisterRequestModel
+import org.apache.catalina.connector.Response
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCrypt
-import java.util.logging.Logger
-
+import sun.nio.cs.UTF_8
+import java.io.IOException
 
 
 class MyUtil {
@@ -13,6 +14,8 @@ class MyUtil {
         logger!!.info(info)
     }
 }
+
+
 
 
     fun customerDetailsAreNotNull(registerRequestModel: RegisterRequestModel): Boolean {
@@ -25,14 +28,14 @@ class MyUtil {
     }
 
     fun getResponseFailedMessage(registerRequestModel: RegisterRequestModel): String {
-        var message = ""
-        if (registerRequestModel.email.isEmpty())
-            message = "Response Failed :  Email is required !\n"
-        if (registerRequestModel.password.isEmpty())
-            message = "Response Failed :  Password is required !\n"
-        if (registerRequestModel.username.isEmpty())
-            message = "Response Failed :  username is required !\n"
-        return message
+
+
+       return when{
+           registerRequestModel.email.isEmpty() -> "Email is required !\n"
+           registerRequestModel.password.isEmpty() -> "Password is required !\n"
+           registerRequestModel.username.isEmpty() -> "username is required !\n"
+           else -> ""
+       }
     }
 
     fun cryptPlainPassword(plainPassword:String):String{

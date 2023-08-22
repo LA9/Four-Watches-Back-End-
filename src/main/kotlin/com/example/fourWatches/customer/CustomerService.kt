@@ -25,7 +25,7 @@ class CustomerService {
 
 
         if (isEmailAlreadyRegistered(registerRequestModel.email))
-            return ResponseEntity<Any>("Email is already registered", HttpStatus.ACCEPTED)
+            return ResponseEntity<Any>("Email is already registered", HttpStatus.BAD_REQUEST)
         if (isUsernameAlreadyRegistered(registerRequestModel.username))
             return ResponseEntity<Any>("Username is already registered", HttpStatus.BAD_REQUEST)
 

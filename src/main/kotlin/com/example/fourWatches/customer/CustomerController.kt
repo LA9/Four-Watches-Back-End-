@@ -23,7 +23,7 @@ class CustomerController() {
     }
 
     @PostMapping("/login")
-    fun loginCustomer(@RequestBody loginModel: LoginModel): CustomerDao {
+    fun loginCustomer(@RequestBody loginModel: LoginModel):ResponseEntity< Any> {
         return customerService.login(loginModel)
     }
 

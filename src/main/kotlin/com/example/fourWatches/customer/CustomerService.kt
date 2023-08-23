@@ -3,11 +3,9 @@ package com.example.fourWatches.customer
 
 import com.example.fourWatches.util.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 
 @Service
@@ -39,19 +37,18 @@ class CustomerService {
     }
 
 
-    fun login(loginModel: LoginModel): CustomerDao {
+    fun login(loginModel: LoginModel): ResponseEntity<Any> {
 
-        return try {
-            val customer = customerRepository.findCustomerByEmail(loginModel.email.lowercase()).get()
+        if (!(isEmailAlreadyRegistered(loginModel.email)))
+            return ResponseEntity("Email is not registered", HttpStatus.BAD_REQUEST)
 
-            if (comparePassword(loginModel.password, customer.password)) {
-                customer
-            } else
-                return CustomerDao()
+        val customer = customerRepository.findCustomerByEmail(loginModel.email).get()
 
-        } catch (e: EmptyResultDataAccessException) {
-            return CustomerDao()
-        }
+        if (isPasswordMatch(loginModel.password, customer.password))
+            return ResponseEntity(customer, HttpStatus.ACCEPTED)
+        else
+            return ResponseEntity("Incorrect password , Please try again", HttpStatus.ACCEPTED)
+
     }
 
     private fun isUsernameAlreadyRegistered(username: String): Boolean {

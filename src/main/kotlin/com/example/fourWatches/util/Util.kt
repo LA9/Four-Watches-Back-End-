@@ -1,11 +1,9 @@
 package com.example.fourWatches.util
 
 import com.example.fourWatches.customer.RegisterRequestModel
-import org.apache.catalina.connector.Response
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCrypt
-import sun.nio.cs.UTF_8
-import java.io.IOException
+
 
 
 class MyUtil {
@@ -42,7 +40,7 @@ class MyUtil {
         return BCrypt.hashpw(plainPassword , BCrypt.gensalt())
     }
 
-    fun comparePassword(plainPassword: String, cryptPassword :String): Boolean {
+    fun isPasswordMatch(plainPassword: String, cryptPassword :String): Boolean {
         return BCrypt.checkpw(plainPassword,cryptPassword)
     }
 

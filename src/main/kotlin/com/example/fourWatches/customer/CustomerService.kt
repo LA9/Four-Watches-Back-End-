@@ -47,7 +47,7 @@ class CustomerService {
         if (isPasswordMatch(loginModel.password, customer.password))
             return ResponseEntity(customer, HttpStatus.ACCEPTED)
         else
-            return ResponseEntity("Incorrect password , Please try again", HttpStatus.ACCEPTED)
+            return ResponseEntity("Incorrect password , Please try again", HttpStatus.BAD_REQUEST)
 
     }
 

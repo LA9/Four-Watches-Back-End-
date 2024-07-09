@@ -2,7 +2,6 @@ package com.example.fourWatches.customer
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 
@@ -16,20 +15,15 @@ class CustomerController() {
     private lateinit var customerService: CustomerService
 
 
-    @PostMapping("/register")
-    fun registerCustomer(@RequestBody registerRequestModel: RegisterRequestModel): ResponseEntity<Any> {
-
-        return customerService.registerCustomer(registerRequestModel)
+    @PostMapping("/signup")
+    fun signup(@RequestBody signupRequestModel: SignupRequestModel): ResponseEntity<Any> {
+        return customerService.signup(signupRequestModel)
     }
 
     @PostMapping("/login")
-    fun loginCustomer(@RequestBody loginModel: LoginModel):ResponseEntity< Any> {
-        return customerService.login(loginModel)
+    fun login(@RequestBody loginRequestModel: LoginRequestModel):ResponseEntity< Any> {
+        return customerService.login(loginRequestModel)
     }
-
-
-
-
 }
 
 

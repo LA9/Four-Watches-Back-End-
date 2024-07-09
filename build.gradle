@@ -24,8 +24,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	implementation 'com.shedhack.requestbody:cache-filter:2.2.0'
+	implementation 'com.shedhack.requestbody:cache-interceptor:2.2.0'
+	implementation 'io.leopard.boot:leopard-boot-requestbody:0.9.20'
+	implementation 'io.github.dzw1113:multirequest:1.0.1'
+	implementation 'org.ligboy.retrofit2:converter-fastjson-parent:2.1.0'
+	implementation 'org.ligboy.retrofit2:converter-fastjson:2.1.0'
+	testImplementation 'junit:junit:4.13.1'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+//	implementation 'com.starmcc:qm-framework:3.0.1-RELEASE'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 
 	implementation("com.mysql:mysql-connector-j")
 

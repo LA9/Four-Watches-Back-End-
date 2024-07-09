@@ -1,6 +1,6 @@
 package com.example.fourWatches.customer
 
-data class RegisterRequestModel(
+data class SignupRequestModel(
      val username:String = "",
      val email: String = "",
      var password: String =""

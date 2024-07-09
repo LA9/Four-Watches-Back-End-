@@ -11,40 +11,41 @@ import org.springframework.stereotype.Service
 @Service
 class CustomerService {
 
-    val myUtil by lazy { MyUtil() }
 
     @Autowired
     private lateinit var customerRepository: CustomerRepository
 
-    fun registerCustomer(registerRequestModel: RegisterRequestModel): ResponseEntity<Any> {
+    fun signup(signupRequest: SignupRequestModel): ResponseEntity<Any> {
 
-        if (!customerDetailsAreNotNull(registerRequestModel))
-            return ResponseEntity<Any>(getResponseFailedMessage(registerRequestModel), HttpStatus.BAD_REQUEST)
+        if (!customerDetailsAreNotNull(signupRequest))
+            return ResponseEntity<Any>(getResponseFailedMessage(signupRequest), HttpStatus.BAD_REQUEST)
+
+        if (isEmailAlreadyRegistered(signupRequest.email))
+            return ResponseEntity<Any>("Email is already registered", HttpStatus.CONFLICT  )
+        if (isUsernameAlreadyRegistered(signupRequest.username))
+            return ResponseEntity<Any>("Username is already been taken", HttpStatus.CONFLICT)
 
 
-        if (isEmailAlreadyRegistered(registerRequestModel.email))
-            return ResponseEntity<Any>("Email is already registered", HttpStatus.BAD_REQUEST)
-        if (isUsernameAlreadyRegistered(registerRequestModel.username))
-            return ResponseEntity<Any>("Username is already registered", HttpStatus.BAD_REQUEST)
 
-        val customerDao = CustomerDao().apply {
-            username = registerRequestModel.username
-            email = registerRequestModel.email
-            password = cryptPlainPassword(registerRequestModel.password)
-        }
+        val customerDao = CustomerDao(
+            signupRequest.username,
+            signupRequest.email,
+            cryptPlainPassword(signupRequest.password)
+        )
+
         customerRepository.save(customerDao)
-        return ResponseEntity<Any>(customerDao, HttpStatus.ACCEPTED)
+        return ResponseEntity<Any>(customerDao, HttpStatus.OK)
     }
 
 
-    fun login(loginModel: LoginModel): ResponseEntity<Any> {
+    fun login(loginRequestModel: LoginRequestModel): ResponseEntity<Any> {
 
-        if (!(isEmailAlreadyRegistered(loginModel.email)))
+        if (!(isEmailAlreadyRegistered(loginRequestModel.email)))
             return ResponseEntity("Email is not registered", HttpStatus.BAD_REQUEST)
 
-        val customer = customerRepository.findCustomerByEmail(loginModel.email).get()
+        val customer = customerRepository.findCustomerByEmail(loginRequestModel.email).get()
 
-        if (isPasswordMatch(loginModel.password, customer.password))
+        if (isPasswordMatch(loginRequestModel.password, customer.password))
             return ResponseEntity(customer, HttpStatus.ACCEPTED)
         else
             return ResponseEntity("Incorrect password , Please try again", HttpStatus.BAD_REQUEST)

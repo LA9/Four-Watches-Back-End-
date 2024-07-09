@@ -4,7 +4,7 @@ spring:
   datasource:
     profile: r
     username: root
-    url: jdbc:mariadb://localhost:3306/dev?createDatabaseIfNotExist=true
+    url: jdbc:mariadb://localhost:3306/four-watch-dev?createDatabaseIfNotExist=true
     password: root
   jpa:
     properties:
@@ -12,6 +12,7 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
     hibernate:
       ddl-auto: update
+
 
 
 server:
